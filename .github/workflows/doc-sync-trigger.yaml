@@ -1,0 +1,17 @@
+name: Docs Sync Trigger
+
+on:
+  pull_request_target:
+    types: [closed]
+
+jobs:
+  trigger:
+    if: github.event.pull_request.merged == true
+    uses: Divv5-jpg/Auto-doc/.github/workflows/dispatcher.yaml@main
+    with:
+      repo_name: ${{ github.repository }}
+      pr_number: ${{ github.event.pull_request.number }}
+      pr_title: ${{ github.event.pull_request.title }}
+    secrets:
+      BOT_TOKEN: ${{ secrets.DOCS_SYNC_BOT_TOKEN }}
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
